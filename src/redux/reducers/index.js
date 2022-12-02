@@ -9,6 +9,12 @@ const initialState = {
 };
 
 const mainReducer = (state = initialState, action) => {
+  if (
+    action.type === "ADD_TO_FAVOURITES" &&
+    state.genericLocations.favourites.includes(action.payload)
+  )
+    return state;
+
   switch (action.type) {
     case "RENDER_GENERIC_LOCATIONS":
       return {
@@ -45,6 +51,19 @@ const mainReducer = (state = initialState, action) => {
         genericLocations: {
           ...state.genericLocations,
           favourites: [...state.genericLocations.favourites, action.payload],
+        },
+      };
+
+    case "DELETE_FAVOURITE_LOCATION":
+      return {
+        ...state,
+        genericLocations: {
+          ...state.genericLocations,
+          favourites: state.genericLocations.favourites.filter(
+            (location, i) => {
+              return i !== action.payload;
+            }
+          ),
         },
       };
 

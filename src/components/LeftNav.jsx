@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
 const LeftNav = () => {
@@ -16,6 +16,10 @@ const LeftNav = () => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log(favouriteLocations);
+  }, [favouriteLocations]);
+
   const showDelete = () => {
     deleteButtons ? setDeleteButtons(false) : setDeleteButtons(true);
     console.log("buttons rendered");
@@ -24,14 +28,32 @@ const LeftNav = () => {
   return (
     <div className="leftNav">
       <h1>Left Nav</h1>
-      <div>Favourite Locations</div>
-      <ul className="locationsUL">
-        {favouriteLocations.map((location, i) => (
-          <li key={i}>
-            {i + 1}.{location.name}
-          </li>
-        ))}
-      </ul>
+      {favouriteLocations.length === 0 ? (
+        <div>Add sth to favourites</div>
+      ) : (
+        <>
+          <div>Favourite Locations</div>
+          <ul className="locationsUL">
+            {favouriteLocations.map((location, i) => (
+              <li key={i}>
+                {deleteButtons && (
+                  <FaTrashAlt
+                    onClick={() => {
+                      console.log("delete");
+                      dispatch({
+                        type: "DELETE_FAVOURITE_LOCATION",
+                        payload: i,
+                      });
+                    }}
+                  />
+                )}
+                {i + 1}.{location.name}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+
       <div>Recommended for you</div>
       <ul className="locationsUL">
         {genericLocations.map((location, i) => (
