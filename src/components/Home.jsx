@@ -40,6 +40,7 @@ const Home = () => {
           payload: data,
         });
         setSearchedLocations([]);
+        setInput([]);
       }
     } catch (error) {
       console.log(error);
@@ -51,7 +52,7 @@ const Home = () => {
       <h1>Weather App</h1>
       <input
         type="text"
-        value={selectedLocation ? "" : input}
+        value={input}
         onChange={(e) => setInput(e.target.value)}
       />
       <ul className="locationsUL">
