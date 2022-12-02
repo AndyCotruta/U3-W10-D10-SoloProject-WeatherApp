@@ -10,6 +10,10 @@ const LeftNav = () => {
     (state) => state.genericLocations.cityNames
   );
 
+  const favouriteLocations = useSelector(
+    (state) => state.genericLocations.favourites
+  );
+
   const dispatch = useDispatch();
 
   const showDelete = () => {
@@ -20,6 +24,14 @@ const LeftNav = () => {
   return (
     <div className="leftNav">
       <h1>Left Nav</h1>
+      <div>Favourite Locations</div>
+      <ul className="locationsUL">
+        {favouriteLocations.map((location, i) => (
+          <li key={i}>
+            {i + 1}.{location.name}
+          </li>
+        ))}
+      </ul>
       <div>Recommended for you</div>
       <ul className="locationsUL">
         {genericLocations.map((location, i) => (
