@@ -1,8 +1,9 @@
 const initialState = {
   genericLocations: {
-    cityNames: ["Hamburg", "Bucharest", "London", "New York", "Amsterdam"],
-    content: [],
-    currentTemperatures: [],
+    curLocData: [],
+    cityNames: ["Hamburg", "Seoul", "London", "New York", "Amsterdam"],
+    cityLats: [],
+    recommendedLocationsData: [],
     selectedLocation: undefined,
     favourites: [],
   },
@@ -16,23 +17,56 @@ const mainReducer = (state = initialState, action) => {
     return state;
 
   switch (action.type) {
-    case "RENDER_GENERIC_LOCATIONS":
-      return {
-        ...state,
-        genericLocations: {
-          ...state.genericLocations,
-          content: [...state.genericLocations.content, action.payload],
-        },
-      };
-
     case "DELETE_GENERIC_LOCATION":
       return {
         ...state,
         genericLocations: {
           ...state.genericLocations,
-          cityNames: state.genericLocations.cityNames.filter((location, i) => {
-            return i !== action.payload;
-          }),
+          recommendedLocationsData:
+            state.genericLocations.recommendedLocationsData.filter(
+              (location, i) => {
+                return i !== action.payload;
+              }
+            ),
+        },
+      };
+
+    case "ADD_CUR_LOC":
+      return {
+        ...state,
+        genericLocations: {
+          ...state.genericLocations,
+          curLoc: [...state.genericLocations.curLoc, action.payload],
+        },
+      };
+
+    case "ADD_CUR_LOC_DATA":
+      return {
+        ...state,
+        genericLocations: {
+          ...state.genericLocations,
+          curLocData: [...state.genericLocations.curLocData, action.payload],
+        },
+      };
+
+    case "ADD_LATS":
+      return {
+        ...state,
+        genericLocations: {
+          ...state.genericLocations,
+          cityLats: [...state.genericLocations.cityLats, action.payload],
+        },
+      };
+
+    case "ADD_REC_LOC_DATA":
+      return {
+        ...state,
+        genericLocations: {
+          ...state.genericLocations,
+          recommendedLocationsData: [
+            ...state.genericLocations.recommendedLocationsData,
+            action.payload,
+          ],
         },
       };
 

@@ -17,7 +17,7 @@ const Home = () => {
   const fetchLatAndLon = async (inputValue) => {
     if (input !== "") {
       let response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${inputValue}&limit=5&appid=450012164dc0af029847cca85c8d17c1`
+        `http://api.openweathermap.org/geo/1.0/direct?q=${inputValue}&limit=5&appid=bad7396c2c27abfb92fe787b53ac8263`
       );
       if (response.ok) {
         let data = await response.json();
@@ -29,7 +29,7 @@ const Home = () => {
 
   const fetchData = async (lon, lat) => {
     let response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=450012164dc0af029847cca85c8d17c1&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=bad7396c2c27abfb92fe787b53ac8263&units=metric`
     );
     try {
       if (response.ok) {
