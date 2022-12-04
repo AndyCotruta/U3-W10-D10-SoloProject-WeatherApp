@@ -1,4 +1,124 @@
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(52, 50, 50, 0.428);
+  border-radius: 10px;
+}
+
+.leftNav {
+  min-width: 250px;
+
+  height: 100vh;
+  overflow: auto;
+  background-color: gray;
+  color: white;
+  padding: 16px;
+}
+
+.currentLocation {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.addFav {
+  font-size: 17px;
+  font-weight: bold;
+}
+
 .locationsUL {
   list-style: none;
   padding-inline: 0;
+}
+
+.leftLi {
+  background-color: rgba(255, 255, 255, 0.169);
+  height: 56px;
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.leftLi:hover {
+  background-color: rgba(255, 255, 255, 0.404);
+}
+
+.leftLiClicked {
+  background-color: rgba(255, 255, 255, 0.404);
+}
+
+.leftNavLocations {
+  width: 100px;
+}
+
+.leftNavIcon {
+  height: 32px;
+}
+
+.leftTempValue {
+  width: 80px;
+  justify-content: end;
+}
+
+.home {
+  flex-grow: 1;
+}
+
+.weather-background {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-width: 80vw;
+  height: 100vh;
+}
+
+.inputField {
+  position: absolute;
+  right: 0;
+  top: 20px;
+}
+
+.searchResults {
+  position: absolute;
+  right: 0;
+  top: 50px;
+}
+
+.Thunderstorm {
+  background-image: url("/public/Thunderstorm.gif");
+}
+
+.Drizzle {
+  background-image: url("/public/Drizzle.gif");
+}
+
+.Rain {
+  background-image: url("/public/Rain.gif");
+}
+
+.Snow {
+  background-image: url("/public/Snow.gif");
+}
+
+.Clouds {
+  background-image: url("/public/Clouds.gif");
+}
+
+.Clear {
+  background-image: url("/public/Clear.gif");
+}
+
+.Mist {
+  background-image: url("/public/Mist.gif");
 }

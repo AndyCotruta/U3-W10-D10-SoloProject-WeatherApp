@@ -2,6 +2,7 @@ import { Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { FaTrashAlt } from "react-icons/fa";
+import { GrLocation } from "react-icons/gr";
 
 const LeftNav = () => {
   const [deleteButtons, setDeleteButtons] = useState(false);
@@ -9,6 +10,7 @@ const LeftNav = () => {
   const [currentLat, setCurrentLat] = useState("");
   const [currentLon, setCurrentLon] = useState("");
   const [currentLocationData, setCurrentLocationData] = useState([]);
+  const [clickedIndex, setClickedIndex] = useState("");
 
   const curLocData = useSelector((state) => state.genericLocations.curLocData);
 
@@ -65,7 +67,7 @@ const LeftNav = () => {
     console.log(recState);
   }, [recState]);
 
-  const fetchLatAndLon = async (location) => {
+  const fetchLatAndLon = async (location, i) => {
     let response = await fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=bad7396c2c27abfb92fe787b53ac8263`
     );
@@ -74,6 +76,7 @@ const LeftNav = () => {
         let data = await response.json();
         console.log(data);
         fetchData(data[0].lat, data[0].lon);
+        setClickedIndex(i);
       }
     } catch (error) {
       console.log(error);
@@ -127,6 +130,7 @@ const LeftNav = () => {
         setCurrentLocationData(data);
         console.log(curLocData);
         console.log(currentLocationData);
+        setClickedIndex(curLocData.id);
       }
     } catch (error) {
       console.log(error);
@@ -139,69 +143,125 @@ const LeftNav = () => {
 
   return (
     <div className="leftNav">
-      <h1>Left Nav</h1>
-      <div
-        className="currentLocation"
-        onClick={() => fetchCurLocData(currentLat, currentLon)}
-      >
-        Current Location
-      </div>
+      <div className="currentLocation">Current Location</div>
       {currentLocationData.length === 0 ? (
-        <div>Please click to locate</div>
+        <div
+          className="leftLi leftLiClicked"
+          onClick={() => fetchCurLocData(currentLat, currentLon)}
+        >
+          <div className="d-flex align-items-center">
+            {" "}
+            <GrLocation />
+            Please click to locate
+          </div>
+        </div>
       ) : (
         <div
-          className="currentLocationData"
+          className={
+            clickedIndex === setCurrentLocationData.id
+              ? "leftLi leftLiClicked"
+              : "leftLi"
+          }
           onClick={() => fetchLatAndLon(currentLocationData.name)}
         >
-          {currentLocationData.name}
-          {currentLocationData.main.temp}°C
+          <div className="leftNavLocations">{currentLocationData.name}</div>
+          {
+            <img
+              className="leftNavIcon"
+              src={`http://openweathermap.org/img/wn/${currentLocationData.weather[0].icon}@2x.png`}
+              alt="weather icon"
+            />
+          }
+          <div className="leftTempValue d-flex align-items-center">
+            {currentLocationData.main.temp}°C
+          </div>
         </div>
       )}
 
       {favouriteLocations.length === 0 ? (
-        <div>Add sth to favourites</div>
+        <>
+          <div className="addFav">Add your favourite locations</div>
+          <div className="leftLi">Currently empty</div>
+        </>
       ) : (
         <>
-          <div>Favourite Locations</div>
+          <div className="addFav">Favourite Locations</div>
           <ul className="locationsUL">
             {favouriteLocations.map((location, i) => (
-              <li key={i}>
-                {deleteButtons && (
-                  <FaTrashAlt
-                    onClick={() => {
-                      console.log("delete");
-                      dispatch({
-                        type: "DELETE_FAVOURITE_LOCATION",
-                        payload: i,
-                      });
-                    }}
+              <li
+                className={
+                  clickedIndex === location.id
+                    ? "leftLi leftLiClicked"
+                    : "leftLi"
+                }
+                onClick={() => fetchLatAndLon(location.name, location.id)}
+                key={i}
+              >
+                <div className="leftNavLocations">{location.name}</div>
+
+                {
+                  <img
+                    className="leftNavIcon"
+                    src={`http://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
+                    alt="weather icon"
                   />
-                )}
-                {i + 1}.{location.name}
+                }
+                <div className="leftTempValue d-flex align-items-center">
+                  {location.main.temp}°C
+                  {deleteButtons && (
+                    <FaTrashAlt
+                      onClick={() => {
+                        console.log("delete");
+                        dispatch({
+                          type: "DELETE_FAVOURITE_LOCATION",
+                          payload: i,
+                        });
+                      }}
+                    />
+                  )}
+                </div>
               </li>
             ))}
           </ul>
         </>
       )}
 
-      <div>Recommended for you</div>
+      <div className="addFav">Recommended for you</div>
       <ul className="locationsUL">
         {recState.map((location, i) => (
-          <li onClick={() => fetchLatAndLon(location.name)} key={location.id}>
+          <li
+            className={
+              clickedIndex === location.id ? "leftLi leftLiClicked" : "leftLi"
+            }
+            onClick={() => fetchLatAndLon(location.name, location.id)}
+            key={location.id}
+          >
             {" "}
-            {deleteButtons && (
-              <FaTrashAlt
-                onClick={() => {
-                  console.log("delete");
-                  dispatch({
-                    type: "DELETE_GENERIC_LOCATION",
-                    payload: i,
-                  });
-                }}
+            <div className="leftNavLocations">{location.name}</div>
+            {
+              <img
+                className="leftNavIcon"
+                src={`http://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
+                alt="weather icon"
               />
-            )}
-            {i + 1}.{location.name}
-            {location.main.temp}°C
+            }
+            <div className="d-flex align-items-center">
+              <div className="leftTempValue d-flex align-items-center">
+                {" "}
+                {location.main.temp}°C
+                {deleteButtons && (
+                  <FaTrashAlt
+                    onClick={() => {
+                      console.log("delete");
+                      dispatch({
+                        type: "DELETE_GENERIC_LOCATION",
+                        payload: i,
+                      });
+                    }}
+                  />
+                )}
+              </div>
+            </div>
           </li>
         ))}
       </ul>
