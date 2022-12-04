@@ -71,6 +71,7 @@ const LeftNav = () => {
     let response = await fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=bad7396c2c27abfb92fe787b53ac8263`
     );
+
     try {
       if (response.ok) {
         let data = await response.json();
@@ -87,13 +88,22 @@ const LeftNav = () => {
     let response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=bad7396c2c27abfb92fe787b53ac8263&units=metric`
     );
+    let secondResponse = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=bad7396c2c27abfb92fe787b53ac8263&units=metric`
+    );
     try {
       if (response.ok) {
         let data = await response.json();
+        let secondData = await secondResponse.json();
         console.log(data);
+        console.log(secondData);
         dispatch({
           type: "SET_SELECTED_LOCATION",
           payload: data,
+        });
+        dispatch({
+          type: "SET_SELECTED_LOCATION_FORECAST",
+          payload: secondData,
         });
       }
     } catch (error) {
@@ -173,7 +183,7 @@ const LeftNav = () => {
             />
           }
           <div className="leftTempValue d-flex align-items-center">
-            {currentLocationData.main.temp}°C
+            {Math.round(currentLocationData.main.temp)}°C
           </div>
         </div>
       )}
@@ -207,7 +217,7 @@ const LeftNav = () => {
                   />
                 }
                 <div className="leftTempValue d-flex align-items-center">
-                  {location.main.temp}°C
+                  {Math.round(location.main.temp)}°C
                   {deleteButtons && (
                     <FaTrashAlt
                       onClick={() => {
@@ -248,7 +258,7 @@ const LeftNav = () => {
             <div className="d-flex align-items-center">
               <div className="leftTempValue d-flex align-items-center">
                 {" "}
-                {location.main.temp}°C
+                {Math.round(location.main.temp)}°C
                 {deleteButtons && (
                   <FaTrashAlt
                     onClick={() => {
