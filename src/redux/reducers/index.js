@@ -6,6 +6,7 @@ const initialState = {
     recommendedLocationsData: [],
     selectedLocation: undefined,
     selectedLocationForecast: undefined,
+    selectedLocationAir: undefined,
     favourites: [],
   },
 };
@@ -85,6 +86,15 @@ const mainReducer = (state = initialState, action) => {
         genericLocations: {
           ...state.genericLocations,
           selectedLocationForecast: action.payload,
+        },
+      };
+
+    case "SET_SELECTED_LOCATION_AIR":
+      return {
+        ...state,
+        genericLocations: {
+          ...state.genericLocations,
+          selectedLocationAir: action.payload,
         },
       };
 

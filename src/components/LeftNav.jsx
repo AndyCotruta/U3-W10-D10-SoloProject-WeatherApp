@@ -6,11 +6,12 @@ import { GrLocation } from "react-icons/gr";
 
 const LeftNav = () => {
   const [deleteButtons, setDeleteButtons] = useState(false);
-  const lats = [];
+  const [lats, setLats] = useState([]);
   const [currentLat, setCurrentLat] = useState("");
   const [currentLon, setCurrentLon] = useState("");
   const [currentLocationData, setCurrentLocationData] = useState([]);
   const [clickedIndex, setClickedIndex] = useState("");
+  const [finLatLon, setFinLatLon] = useState(false);
 
   const curLocData = useSelector((state) => state.genericLocations.curLocData);
 
@@ -29,18 +30,22 @@ const LeftNav = () => {
     console.log("buttons rendered");
   };
 
-  const getRecommendedLatandLon = () => {
-    genericLocations.map(async (location) => {
+  const getRecommendedLatandLon = (gen) => {
+    gen.map(async (location) => {
       let response = await fetch(
         `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=bad7396c2c27abfb92fe787b53ac8263`
       );
       let data = await response.json();
-      lats.push(data[0]);
-      console.log(lats);
+      setLats([...lats, data[0]]);
     });
+    setFinLatLon(true);
   };
 
-  const fetchRecommendedData = () => {
+  useEffect(() => {
+    getRecommendedLatandLon(genericLocations);
+  }, [genericLocations]);
+
+  const fetchRecommendedData = (lats) => {
     lats.map(async (lat) => {
       let response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat.lat}&lon=${lat.lon}&appid=bad7396c2c27abfb92fe787b53ac8263&units=metric`
@@ -58,6 +63,10 @@ const LeftNav = () => {
       }
     });
   };
+
+  useEffect(() => {
+    fetchRecommendedData(lats);
+  }, [finLatLon]);
 
   const recState = useSelector(
     (state) => state.genericLocations.recommendedLocationsData
@@ -91,12 +100,17 @@ const LeftNav = () => {
     let secondResponse = await fetch(
       `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=bad7396c2c27abfb92fe787b53ac8263&units=metric`
     );
+    let thirdResponse = await fetch(
+      `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=bad7396c2c27abfb92fe787b53ac8263`
+    );
     try {
       if (response.ok) {
         let data = await response.json();
         let secondData = await secondResponse.json();
+        let thirdData = await thirdResponse.json();
         console.log(data);
         console.log(secondData);
+        console.log(thirdData);
         dispatch({
           type: "SET_SELECTED_LOCATION",
           payload: data,
@@ -104,6 +118,10 @@ const LeftNav = () => {
         dispatch({
           type: "SET_SELECTED_LOCATION_FORECAST",
           payload: secondData,
+        });
+        dispatch({
+          type: "SET_SELECTED_LOCATION_AIR",
+          payload: thirdData,
         });
       }
     } catch (error) {
@@ -280,12 +298,12 @@ const LeftNav = () => {
         <Button className="mt-2" onClick={() => showDelete()}>
           Manage Locations
         </Button>
-        <Button className="mt-2" onClick={() => getRecommendedLatandLon()}>
+        {/* <Button className="mt-2" onClick={() => getRecommendedLatandLon()}>
           getRecommendedLatandLon
-        </Button>
-        <Button className="mt-2" onClick={() => fetchRecommendedData()}>
+        </Button> */}
+        {/* <Button className="mt-2" onClick={() => fetchRecommendedData()}>
           fetchRecommendedData
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
