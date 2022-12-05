@@ -30,14 +30,17 @@ const LeftNav = () => {
     console.log("buttons rendered");
   };
 
-  const getRecommendedLatandLon = (gen) => {
-    gen.map(async (location) => {
+  const getRecommendedLatandLon = async (gen) => {
+    let arrayOfPromises = gen.map(async (location) => {
       let response = await fetch(
         `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=278512eae969bda7b3bc376fb984ec0b`
       );
       let data = await response.json();
-      setLats([...lats, data[0]]);
+      return data[0];
     });
+    let results = await Promise.all(arrayOfPromises);
+    console.log("RESULTS", results);
+    setLats(results);
     setFinLatLon(true);
   };
 
