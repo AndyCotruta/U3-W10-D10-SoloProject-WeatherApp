@@ -15,6 +15,10 @@ const LeftNav = () => {
 
   const curLocData = useSelector((state) => state.genericLocations.curLocData);
 
+  const selectedLocation = useSelector(
+    (state) => state.genericLocations.selectedLocation
+  );
+
   const genericLocations = useSelector(
     (state) => state.genericLocations.cityNames
   );
@@ -76,59 +80,6 @@ const LeftNav = () => {
     console.log(recState);
   }, [recState]);
 
-  const fetchLatAndLon = async (location, i) => {
-    let response = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=278512eae969bda7b3bc376fb984ec0b`
-    );
-
-    try {
-      if (response.ok) {
-        let data = await response.json();
-        console.log(data);
-        fetchData(data[0].lat, data[0].lon);
-        setClickedIndex(i);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchData = async (lat, lon) => {
-    let response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=278512eae969bda7b3bc376fb984ec0b&units=metric`
-    );
-    let secondResponse = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=278512eae969bda7b3bc376fb984ec0b&units=metric`
-    );
-    let thirdResponse = await fetch(
-      `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=278512eae969bda7b3bc376fb984ec0b`
-    );
-    try {
-      if (response.ok) {
-        let data = await response.json();
-        let secondData = await secondResponse.json();
-        let thirdData = await thirdResponse.json();
-        console.log(data);
-        console.log(secondData);
-        console.log(thirdData);
-        dispatch({
-          type: "SET_SELECTED_LOCATION",
-          payload: data,
-        });
-        dispatch({
-          type: "SET_SELECTED_LOCATION_FORECAST",
-          payload: secondData,
-        });
-        dispatch({
-          type: "SET_SELECTED_LOCATION_AIR",
-          payload: thirdData,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     if ("geolocation" in navigator) {
       console.log("Available");
@@ -186,11 +137,17 @@ const LeftNav = () => {
       ) : (
         <div
           className={
-            clickedIndex === setCurrentLocationData.id
+            clickedIndex === currentLocationData.id
               ? "leftLi leftLiClicked"
               : "leftLi"
           }
-          onClick={() => fetchLatAndLon(currentLocationData.name)}
+          onClick={() => (
+            dispatch({
+              type: "SET_SELECTED_LOCATION",
+              payload: currentLocationData,
+            }),
+            setClickedIndex(currentLocationData.id)
+          )}
         >
           <div className="leftNavLocations">{currentLocationData.name}</div>
           {
@@ -222,7 +179,13 @@ const LeftNav = () => {
                     ? "leftLi leftLiClicked"
                     : "leftLi"
                 }
-                onClick={() => fetchLatAndLon(location.name, location.id)}
+                onClick={() => (
+                  dispatch({
+                    type: "SET_SELECTED_LOCATION",
+                    payload: location,
+                  }),
+                  setClickedIndex(location.id)
+                )}
                 key={i}
               >
                 <div className="leftNavLocations">{location.name}</div>
@@ -261,7 +224,13 @@ const LeftNav = () => {
             className={
               clickedIndex === location.id ? "leftLi leftLiClicked" : "leftLi"
             }
-            onClick={() => fetchLatAndLon(location.name, location.id)}
+            onClick={() => (
+              dispatch({
+                type: "SET_SELECTED_LOCATION",
+                payload: location,
+              }),
+              setClickedIndex(location.id)
+            )}
             key={location.id}
           >
             {" "}
