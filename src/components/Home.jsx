@@ -18,7 +18,7 @@ const Home = () => {
   const fetchLatAndLon = async (inputValue) => {
     if (input !== "") {
       let response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${inputValue}&limit=5&appid=bad7396c2c27abfb92fe787b53ac8263`
+        `http://api.openweathermap.org/geo/1.0/direct?q=${inputValue}&limit=5&appid=278512eae969bda7b3bc376fb984ec0b`
       );
       if (response.ok) {
         let data = await response.json();
@@ -30,13 +30,13 @@ const Home = () => {
 
   const fetchData = async (lon, lat) => {
     let response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=bad7396c2c27abfb92fe787b53ac8263&units=metric`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=278512eae969bda7b3bc376fb984ec0b&units=metric`
     );
     let secondResponse = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=bad7396c2c27abfb92fe787b53ac8263&units=metric`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=278512eae969bda7b3bc376fb984ec0b&units=metric`
     );
     let thirdResponse = await fetch(
-      `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=bad7396c2c27abfb92fe787b53ac8263`
+      `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=278512eae969bda7b3bc376fb984ec0b`
     );
     try {
       if (response.ok) {
