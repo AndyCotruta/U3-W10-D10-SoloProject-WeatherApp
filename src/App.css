@@ -1,4 +1,5 @@
 ::-webkit-scrollbar {
+  background: rgba(0, 0, 0, 0.567);
   width: 8px;
 }
 
@@ -8,7 +9,7 @@
 } */
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.169);
+  background: rgba(0, 0, 0, 0.567);
   border-radius: 10px;
 }
 
@@ -73,6 +74,8 @@
 
 .home {
   flex-grow: 1;
+  min-width: 80vw;
+  height: 100vh;
 }
 
 .welcomeText {
@@ -102,8 +105,7 @@
   background-repeat: no-repeat;
   background-size: cover;
 
-  min-width: 80vw;
-  height: 100vh;
+  overflow: auto;
 }
 
 .addButton {
@@ -173,7 +175,7 @@
 
 .weatherInfo {
   background-color: rgba(0, 0, 0, 0.567);
-  height: 100%;
+
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -217,6 +219,13 @@
 .forecastWeather {
   background-color: rgba(255, 255, 255, 0.169);
   border-radius: 8px;
+  padding: 8px;
+}
+
+.fivedayForecast {
+  background-color: rgba(255, 255, 255, 0.169);
+  border-radius: 8px;
+  width: 500px;
   padding: 8px;
 }
 

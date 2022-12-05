@@ -161,7 +161,7 @@ const Home = () => {
             >
               Add
             </div>
-            <div className="d-flex forecastWeather mt-3">
+            <div className="d-flex forecastWeather mt-5">
               {selectedLocationForecast !== undefined &&
                 selectedLocationForecast.list.slice(0, 9).map((loc, i) => (
                   <div
@@ -184,7 +184,36 @@ const Home = () => {
                   </div>
                 ))}
             </div>
-            <div className="d-flex flex-column mt-4">
+            <div className="d-flex fivedayForecast mt-5">
+              {selectedLocationForecast !== undefined &&
+                [
+                  selectedLocationForecast.list[0],
+                  selectedLocationForecast.list[7],
+                  selectedLocationForecast.list[15],
+                  selectedLocationForecast.list[23],
+                  selectedLocationForecast.list[31],
+                ].map((loc, i) => (
+                  <div
+                    className="d-flex flex-column align-items-center"
+                    key={i}
+                  >
+                    <div className="text-center">
+                      {format(parseISO(loc.dt_txt), "do MMMM")}
+                    </div>
+                    <img
+                      className="hourlyIcon"
+                      src={`http://openweathermap.org/img/wn/${loc.weather[0].icon}@2x.png`}
+                      alt="weather icon"
+                    />
+                    <div>
+                      <span className="hourlyTemp">
+                        {Math.round(loc.main.temp)}°C
+                      </span>
+                    </div>
+                  </div>
+                ))}
+            </div>
+            <div className="d-flex flex-column my-5">
               {selectedLocationAir !== undefined && (
                 <div className="airQuality">
                   <div className="AQ">Air Quality</div>
