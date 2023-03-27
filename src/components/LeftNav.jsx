@@ -81,7 +81,7 @@ const LeftNav = () => {
 
   const fetchLatAndLon = async (location, i) => {
     let response = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=278512eae969bda7b3bc376fb984ec0b`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=278512eae969bda7b3bc376fb984ec0b`
     );
 
     try {
@@ -104,7 +104,7 @@ const LeftNav = () => {
       `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=278512eae969bda7b3bc376fb984ec0b&units=metric`
     );
     let thirdResponse = await fetch(
-      `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=278512eae969bda7b3bc376fb984ec0b`
+      `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=278512eae969bda7b3bc376fb984ec0b`
     );
     try {
       if (response.ok) {
@@ -199,7 +199,7 @@ const LeftNav = () => {
           {
             <img
               className="leftNavIcon"
-              src={`http://openweathermap.org/img/wn/${currentLocationData.weather[0].icon}@2x.png`}
+              src={`https://openweathermap.org/img/wn/${currentLocationData.weather[0].icon}@2x.png`}
               alt="weather icon"
             />
           }
@@ -233,7 +233,7 @@ const LeftNav = () => {
                 {
                   <img
                     className="leftNavIcon"
-                    src={`http://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
+                    src={`https://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
                     alt="weather icon"
                   />
                 }
@@ -272,7 +272,7 @@ const LeftNav = () => {
             {
               <img
                 className="leftNavIcon"
-                src={`http://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
+                src={`https://openweathermap.org/img/wn/${location.weather[0].icon}@2x.png`}
                 alt="weather icon"
               />
             }
