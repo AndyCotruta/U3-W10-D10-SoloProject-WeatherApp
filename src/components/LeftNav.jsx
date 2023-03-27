@@ -33,7 +33,7 @@ const LeftNav = () => {
   const getRecommendedLatandLon = async (gen) => {
     let arrayOfPromises = gen.map(async (location) => {
       let response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=278512eae969bda7b3bc376fb984ec0b`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=278512eae969bda7b3bc376fb984ec0b`
       );
       let data = await response.json();
       return data[0];
@@ -301,12 +301,6 @@ const LeftNav = () => {
         <Button className="mt-2" onClick={() => showDelete()}>
           Manage Locations
         </Button>
-        {/* <Button className="mt-2" onClick={() => getRecommendedLatandLon()}>
-          getRecommendedLatandLon
-        </Button> */}
-        {/* <Button className="mt-2" onClick={() => fetchRecommendedData()}>
-          fetchRecommendedData
-        </Button> */}
       </div>
     </div>
   );
