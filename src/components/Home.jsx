@@ -184,7 +184,7 @@ const Home = () => {
                   </div>
                 ))}
             </div>
-            <div className="d-flex fivedayForecast mt-5">
+            <div className="d-flex justify-content-between fivedayForecast mt-5">
               {selectedLocationForecast !== undefined &&
                 [
                   selectedLocationForecast.list[0],
