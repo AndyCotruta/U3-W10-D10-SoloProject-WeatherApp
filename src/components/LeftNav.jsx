@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { GrLocation } from "react-icons/gr";
 
-const LeftNav = (showMobileNav, setShowMobileNav) => {
+const LeftNav = ({ showMobileNav, setShowMobileNav }) => {
   const [deleteButtons, setDeleteButtons] = useState(false);
   const [lats, setLats] = useState([]);
   const [currentLat, setCurrentLat] = useState("");
@@ -174,7 +174,7 @@ const LeftNav = (showMobileNav, setShowMobileNav) => {
 
   return (
     <div className={showMobileNav ? "leftNav-mobile" : "leftNav"}>
-      <div className="currentLocation">Current Location</div>
+      <div className="currentLocation mb-2">Current Location</div>
       {currentLocationData.length === 0 ? (
         <div
           className="leftLi leftLiClicked"
@@ -211,12 +211,12 @@ const LeftNav = (showMobileNav, setShowMobileNav) => {
 
       {favouriteLocations.length === 0 ? (
         <>
-          <div className="addFav">Add your favourite locations</div>
+          <div className="addFav mb-3">Add your favourite locations</div>
           <div className="leftLi">Currently empty</div>
         </>
       ) : (
         <>
-          <div className="addFav">Favourite Locations</div>
+          <div className="addFav mb-3">Favourite Locations</div>
           <ul className="locationsUL">
             {favouriteLocations.map((location, i) => (
               <li
@@ -257,14 +257,17 @@ const LeftNav = (showMobileNav, setShowMobileNav) => {
         </>
       )}
 
-      <div className="addFav">Recommended for you</div>
+      <div className="addFav mb-3">Recommended for you</div>
       <ul className="locationsUL">
         {recState.map((location, i) => (
           <li
             className={
               clickedIndex === location.id ? "leftLi leftLiClicked" : "leftLi"
             }
-            onClick={() => fetchLatAndLon(location.name, location.id)}
+            onClick={() => {
+              fetchLatAndLon(location.name, location.id);
+              setShowMobileNav(false);
+            }}
             key={location.id}
           >
             {" "}

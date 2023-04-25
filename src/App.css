@@ -304,7 +304,7 @@
 
 /* ............................Responsive design........................... */
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 915px) {
   .leftNav {
     min-width: 280px;
     max-width: 280px;
@@ -313,7 +313,9 @@
     background-color: rgb(63, 63, 63);
     color: white;
     padding: 16px;
+    position: absolute;
     transform: translateX(-100%);
+    transition: all 0.2s ease-in-out;
   }
   .leftNav-mobile {
     min-width: 280px;
@@ -323,11 +325,28 @@
     background-color: rgb(63, 63, 63);
     color: white;
     padding: 16px;
+    padding-top: 3rem;
     position: absolute;
+    z-index: 2;
+    transition: all 0.2s ease-in-out;
   }
   .mobile-menu {
     visibility: visible;
-    z-index: 2;
+    z-index: 3;
+    transition: all 0.2s ease-in-out;
+  }
+  .mobile-menu-moved {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.169);
+    padding: 0.5rem;
+    top: 1rem;
+    left: 1rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transform: translateX(650%);
+    z-index: 3;
+    transition: all 0.2s ease-in-out;
   }
   .center-section {
     width: 100%;
@@ -345,4 +364,20 @@
   .airQuality {
     width: 100%;
   }
+  .location-values {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .location-values {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+::-webkit-scrollbar {
+  height: 4px;
+  width: 8px;
 }

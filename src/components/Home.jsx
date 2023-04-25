@@ -78,7 +78,7 @@ const Home = ({ showMobileNav, setShowMobileNav }) => {
   return (
     <div className="home d-flex flex-column text-white ">
       <div
-        className="mobile-menu"
+        className={showMobileNav ? "mobile-menu-moved" : "mobile-menu"}
         onClick={() => {
           setShowMobileNav(!showMobileNav);
         }}
