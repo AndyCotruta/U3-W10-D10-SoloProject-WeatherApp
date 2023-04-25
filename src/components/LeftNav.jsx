@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { GrLocation } from "react-icons/gr";
 
-const LeftNav = () => {
+const LeftNav = (showMobileNav, setShowMobileNav) => {
   const [deleteButtons, setDeleteButtons] = useState(false);
   const [lats, setLats] = useState([]);
   const [currentLat, setCurrentLat] = useState("");
@@ -173,7 +173,7 @@ const LeftNav = () => {
   }, [currentLocationData]);
 
   return (
-    <div className="leftNav">
+    <div className={showMobileNav ? "leftNav-mobile" : "leftNav"}>
       <div className="currentLocation">Current Location</div>
       {currentLocationData.length === 0 ? (
         <div

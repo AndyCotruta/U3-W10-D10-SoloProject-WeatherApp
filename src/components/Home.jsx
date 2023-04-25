@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { parseISO, format } from "date-fns";
+import { AiOutlineMenu } from "react-icons/ai";
 
-const Home = () => {
+const Home = ({ showMobileNav, setShowMobileNav }) => {
   const [input, setInput] = useState(" ");
   const [searchedLocations, setSearchedLocations] = useState([]);
   const dispatch = useDispatch();
@@ -76,6 +77,15 @@ const Home = () => {
 
   return (
     <div className="home d-flex flex-column text-white ">
+      <div
+        className="mobile-menu"
+        onClick={() => {
+          setShowMobileNav(!showMobileNav);
+        }}
+      >
+        <AiOutlineMenu />
+      </div>
+
       <input
         className="inputField"
         placeholder="Search"
@@ -213,7 +223,7 @@ const Home = () => {
                   </div>
                 ))}
             </div>
-            <div className="d-flex flex-column my-5">
+            <div className="location-values my-5">
               {selectedLocationAir !== undefined && (
                 <div className="airQuality">
                   <div className="AQ">Air Quality</div>
